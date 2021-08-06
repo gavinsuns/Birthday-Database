@@ -343,14 +343,6 @@ public void updateTable() {
         }
         
         updateTable();
-        
-        DefaultTableModel iModel = (DefaultTableModel) jTable1.getModel();
-        if (jTable1.getSelectedRow() == -1) {
-            if (jTable1.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(null, "Data Entry Update Confirmed", "Data Entry Stream",
-                        JOptionPane.OK_OPTION);
-            }
-        }
     }//GEN-LAST:event_jbtnAddNewActionPerformed
 
     private void jbtnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnResetActionPerformed
@@ -397,47 +389,46 @@ private JFrame frame;
     }//GEN-LAST:event_cboMonthActionPerformed
 
     private void jbtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUpdateActionPerformed
-        /*DefaultTableModel mod = (DefaultTableModel) jTable1.getModel();
-        mod.setRowCount(0);
-        
-        String sql = "INSERT INTO dataform(FirstName, LastName, YearMet, Day, Month, Year, Address, "
-                + "PhoneNumber, FavouriteFood, FavouriteSport, FavouriteShow)VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-        try {
-            pst = conn.prepareStatement(sql);
-            
-            pst.setString(1, jtxtFirstName.getText());
-            pst.setString(2, jtxtLastName.getText());
-            pst.setString(3, jtxtYearMet.getText());
-            pst.setString(4, jtxtDay.getText());
-            pst.setString(5, (String) cboMonth.getSelectedItem());
-            pst.setString(6, jtxtYear.getText());
-            pst.setString(7, jtxtAddress.getText());
-            pst.setString(8, jtxtPhoneNumber.getText());
-            pst.setString(9, jtxtFavouriteFood.getText());
-            pst.setString(10, jtxtFavouriteSport.getText());
-            pst.setString(11, jtxtFavouriteShow.getText());
-                
-            pst.execute();
-            JOptionPane.showMessageDialog(null, "Table Updated");
-            rs.close();
-            pst.close();
-        }
-        catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }*/
-        updateTable();
-        
-        DefaultTableModel iModel = (DefaultTableModel) jTable1.getModel();
         if (jTable1.getSelectedRow() == -1) {
             if (jTable1.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(null, "Data Entry Update Confirmed", "Data Entry Stream",
-                        JOptionPane.OK_OPTION);
+                JOptionPane.showMessageDialog(null, "No data to update ",
+                        "Data Form", JOptionPane.OK_OPTION);
             }
+            else {
+                JOptionPane.showMessageDialog(null, "Select a row to update ",
+                        "Data Form", JOptionPane.OK_OPTION);
+            }
+        }
+        else {
+            String sql = "UPDATE dataform SET FirstName = ?, LastName = ?, YearMet = ?, "
+                    + "Day = ?, Month = ?, Year = ?, Address = ?, PhoneNumber = ?, FavouriteFood = ?, "
+                    + "FavouriteSport = ?, FavouriteShow = ?";
+            try {
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, jtxtFirstName.getText());
+                pst.setString(2, jtxtLastName.getText());
+                pst.setString(3, jtxtYearMet.getText());
+                pst.setString(4, jtxtDay.getText());
+                pst.setString(5, (String) cboMonth.getSelectedItem());
+                pst.setString(6, jtxtYear.getText());
+                pst.setString(7, jtxtAddress.getText());
+                pst.setString(8, jtxtPhoneNumber.getText());
+                pst.setString(9, jtxtFavouriteFood.getText());
+                pst.setString(10, jtxtFavouriteSport.getText());
+                pst.setString(11, jtxtFavouriteShow.getText());
+                pst.execute();
+                JOptionPane.showMessageDialog(null, "Updated");
+            }
+            catch (HeadlessException | SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            DefaultTableModel mod = (DefaultTableModel) jTable1.getModel();
+            mod.setRowCount(0);
+            updateTable();
         }
     }//GEN-LAST:event_jbtnUpdateActionPerformed
 
     private void jbtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeleteActionPerformed
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         if (jTable1.getSelectedRow() == -1) {
             if (jTable1.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(null, "No data to delete ",
@@ -449,7 +440,31 @@ private JFrame frame;
             }
         }
         else {
-            model.removeRow(jTable1.getSelectedRow());
+            String sql = "DELETE FROM dataform WHERE FirstName = ? AND LastName = ? AND YearMet = ? AND "
+                    + "Day = ? AND Month = ? AND Year = ? AND Address = ? AND PhoneNumber = ? AND FavouriteFood = ? AND "
+                    + "FavouriteSport = ? AND FavouriteShow = ?";
+            try {
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, jtxtFirstName.getText());
+                pst.setString(2, jtxtLastName.getText());
+                pst.setString(3, jtxtYearMet.getText());
+                pst.setString(4, jtxtDay.getText());
+                pst.setString(5, (String) cboMonth.getSelectedItem());
+                pst.setString(6, jtxtYear.getText());
+                pst.setString(7, jtxtAddress.getText());
+                pst.setString(8, jtxtPhoneNumber.getText());
+                pst.setString(9, jtxtFavouriteFood.getText());
+                pst.setString(10, jtxtFavouriteSport.getText());
+                pst.setString(11, jtxtFavouriteShow.getText());
+                pst.execute();
+                JOptionPane.showMessageDialog(null, "Deleted");
+            }
+            catch (HeadlessException | SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            DefaultTableModel mod = (DefaultTableModel) jTable1.getModel();
+            mod.setRowCount(0);
+            updateTable();
         }
     }//GEN-LAST:event_jbtnDeleteActionPerformed
 
